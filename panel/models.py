@@ -65,7 +65,7 @@ class User(models.Model):
     user_deleted_key = models.BooleanField(default=False,verbose_name='deleted')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now_add=True)
-    prefix_code = models.CharField(Prefix)
+    prefix_code = models.ForeignKey(Prefix,null=True)
     black_list = models.BooleanField(default=False)
     black_list_desc = models.CharField(null=True,max_length=200)
     class Meta:
@@ -77,7 +77,7 @@ class User(models.Model):
         return self.mobile
 
 class Keyword(models.Model):
-    keyword = models.CharField(unique=True)
+    keyword = models.CharField(max_length=20,unique=True)
     service = models.ForeignKey(Service, verbose_name='service_id')
     unsubscribe = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
