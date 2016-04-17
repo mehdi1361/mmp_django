@@ -88,3 +88,47 @@ class Keyword(models.Model):
 
     def __str__(self):
         return self.service.name + '->' + self.keyword
+
+class Statistic(models.Model):
+    service = models.ForeignKey(Service)
+    date = models.DateTimeField(db_index=True, auto_now_add=True)
+    inbound = models.IntegerField(default=0)
+    outbound_free = models.IntegerField(default=0)
+    outbound_od = models.IntegerField(default=0)
+    outbound_ac = models.IntegerField(default=0)
+    delivered_free = models.IntegerField(default=0)
+    delivered_od = models.IntegerField(default=0)
+    delivered_ac = models.IntegerField(default=0)
+    subscribe = models.IntegerField(default=0)
+    unsubscribe = models.IntegerField(default=0)
+    active_user = models.IntegerField(default=0)
+    prepaid_subscribers_count = models.IntegerField(verbose_name='prepaidSubscribersCount', default=0)
+    postpaid_subscribers_count = models.IntegerField(verbose_name='postpaidSubscribersCount', default=0)
+    prepaid_activation_count = models.IntegerField(verbose_name='prepaidActivationCount', default=0)
+    postpaid_activation_count = models.IntegerField(verbose_name='postpaidActivationCount', default=0)
+    prepaid_deactivation_count = models.IntegerField(verbose_name='prepaidDeactivationCount', default=0)
+    postpaid_deactivation_count = models.IntegerField(verbose_name='postpaidDeactivationCount', default=0)
+    prepaid_sent_message_count = models.IntegerField(verbose_name='prepaidSentMessageCount', default=0)
+    postpaid_sent_message_count = models.IntegerField(verbose_name='postpaidSentMessageCount', default=0)
+    failed_message = models.IntegerField(verbose_name='failed_message', default=0)
+    class Meta:
+        db_table = 'statistics'
+        ordering = ['id']
+
+    def __str__(self):
+        return self.service
+
+class History(models.Model):
+    user = models.ForeignKey(User)
+    action = models.CharField(max_length=20)
+    by = models.CharField(max_length=20)
+    description = models.CharField(max_length=200)
+    created_at = models.DateTimeField()
+    updated_at = models.DateTimeField()
+    short_code = models.CharField(max_length=20)
+    mo_message = models.CharField(max_length=20)
+    class Meta:
+        db_table = 'history'
+
+    def __str__(self):
+        return self.id
